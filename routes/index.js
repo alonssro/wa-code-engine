@@ -30,7 +30,7 @@ var router = express.Router();
  * tags:
  *   name: Registry
  *   description: Registry managing
- * /:
+ * /registry:
  *   post:
  *     summary: Create new registry
  *     tags: [Registry]
@@ -51,7 +51,7 @@ var router = express.Router();
  *         description: Some server error
  *
  */
-router.post('/', async function (req, res, next) {
+router.post('/registry', async function (req, res, next) {
 
   const service = CloudantV1.newInstance();
   

@@ -6,6 +6,7 @@ var swaggerJsdoc = require("swagger-jsdoc");
 var swaggerUi = require("swagger-ui-express");
 
 var indexRouter = require('./routes/index');
+const { initialize } = require('express-openapi');
 
 
 var app = express();
@@ -39,16 +40,33 @@ const options = {
       {
         url: "http://localhost:3000",
       },
+      {
+        url: "https://sonda.1bevw5dik67h.us-south.codeengine.appdomain.cloud"
+      }
     ],
   },
   apis: ["./routes/*.js"],
 };
 
-const specs = swaggerJsdoc(options);
+initialize({
+  app,
+  apiDoc: require("./api/api-doc"),
+  paths: "./api/paths",
+});
+
+const specs = swaggerJsdoc({ ...options });
 app.use(
-  "/api-docs",
+  "/api-documentation",
   swaggerUi.serve,
-  swaggerUi.setup(specs)
+  swaggerUi.setup(specs, {
+    swaggerOptions: {
+      url: "http://localhost:3000/api-docs",
+    }
+  })
+);
+console.log("App running on port http://localhost:3000");
+console.log(
+  "OpenAPI documentation available in http://localhost:3000/api-documentation"
 );
 
 module.exports = app;
