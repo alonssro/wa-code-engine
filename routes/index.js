@@ -13,6 +13,7 @@ var router = express.Router();
  *       required:
  *         - email
  *         - account
+ *         - phoneNumber
  *       properties:
  *         email:
  *           type: string
@@ -20,9 +21,13 @@ var router = express.Router();
  *         account:
  *           type: number
  *           description: User's account number
+ *         phoneNumber:
+ *           type: string
+ *           description: User's phone number
  *       example:
  *         email: john@doe.com
  *         account: 12345
+ *         phoneNumber: 123456789
  */
 
 /**
@@ -55,17 +60,20 @@ router.post('/registry', async function (req, res, next) {
 
   const service = CloudantV1.newInstance();
   
-  const { email, account } = req?.body || {};
+  const { email, account, phoneNumber } = req?.body || {};
   const productsDoc = {
     email,
-    account
+    account,
+    phoneNumber
   };
+
   await service.postDocument({
     db: 'registries',
     document: productsDoc,
     contentType: 'application/json'
-  })
-  return res.json({ email, account }).status(200);
+  });
+
+  return res.json({ email, account, phoneNumber }).status(200);
 });
 
 module.exports = router;

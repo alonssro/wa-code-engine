@@ -26,7 +26,9 @@ module.exports = function () {
     ],
     responses: {
       201: {
-        description: "Created",
+        schema: {
+          $ref: "#/definitions/Registry",
+        },
       },
     },
   };
