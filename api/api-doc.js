@@ -1,25 +1,35 @@
 const apiDoc = {
-  swagger: "2.0",
-  basePath: "/",
+  openapi: "3.0.1",
   info: {
-    title: "Sonda app API.",
-    version: "1.0.0",
+    title: "Migrated Webhook",
+    version: "1.0"
   },
-  definitions: {
-    Registry: {
-      type: "object",
-      properties: {
-        account: {
-          type: "number",
+  servers: [
+    {
+      url: "https://sonda.1bevw5dik67h.us-south.codeengine.appdomain.cloud",
+      description: "main_webhook"
+    }
+  ],
+  components: {
+    schemas: {
+      Registry: {
+        type: "object",
+        properties: {
+          account: {
+            type: "number",
+          },
+          email: {
+            type: "string",
+          },
+          phoneNumber: {
+            type: "string"
+          }
         },
-        email: {
-          type: "string",
-        },
+        required: ["account", "email", "phoneNumber"],
       },
-      required: ["account", "email"],
     },
   },
   paths: {},
 };
 
-module.exports = apiDoc
+module.exports = apiDoc;
